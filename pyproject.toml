@@ -1,0 +1,19 @@
+[project]
+name = "manitomanim"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "vichoclo98", email = "vichoclo98@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "manim>=0.20.1",
+]
+
+[project.scripts]
+manitomanim = "manitomanim:main"
+
+[build-system]
+requires = ["uv_build>=0.12.1,<0.13.0"]
+build-backend = "uv_build"
