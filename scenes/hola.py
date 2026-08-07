@@ -1,13 +1,53 @@
 from manim import *
 
-class Chao(Scene):
+#uv run manim -pql scenes/hola.py Lanzamiento
+class Lanzamiento(Scene):
     def construct(self):
-        texto = Text("¡Chao, Manito!")
-        self.play(Write(texto))
-        self.wait(2)
+        t=ValueTracker(0)
+        circle = always_redraw(
+                 lambda: Circle(radius=0.15, color=GREEN).move_to([2*t.get_value()-4,3*t.get_value()-1*t.get_value()**2-3,0]).set_fill(ManimColor("#88FF44"), opacity=1)  # set the color and transparency
+        )
+        puntofalso= always_redraw(
+                 lambda: Dot(radius=0).move_to([t.get_value()-4,1.5*t.get_value()-3,0])
+        )
+        velocidad =always_redraw(
+                 lambda: Arrow(start=[-4,-3,0], end=[2*t.get_value()-4,3*t.get_value()-3,0], color=BLUE)
+        )
+        aceleración =always_redraw(
+                         lambda: Arrow(start=[2*t.get_value()-4,3*t.get_value()-3,0], end=[2*t.get_value()-4,3*t.get_value()-1*t.get_value()**2-3,0], color=RED)
+                )
+        trazo=TracedPath(circle.get_center)
+        velotext=MathTex(r"\vec{v}\cdot t").add_updater(lambda m: m.next_to(puntofalso, LEFT))
+        acetext=MathTex(r"\frac{\vec{g}\cdot t^2}{2}").add_updater(lambda x: x.next_to(aceleración, RIGHT))
+        self.add(trazo,puntofalso)
+        self.play(FadeIn(circle))
+        self.add(velocidad,aceleración,velotext,acetext)
+        self.play(
+	        t.animate.set_value(3), #define a que valor se cambia t
+	        run_time=4, #cuantos segundos dura la animación, vale 1 si se omite la línea
+	        rate_func=linear #velocidad de cambio constante, puede hacerse un ida y vuelta, animación suave (por defecto), etc.
+        )
+        self.wait()
 
-class Prueba(Scene):
+class Prueba(Scene): #hecho por chatGPT, no lo entiendo bien aun
     def construct(self):
-        texto = Text("Prueba uno")
-        self.play(Write(texto))
-        self.wait(2)
+        v1 = 1
+        v2 = 0.5
+
+        t = ValueTracker(0)
+
+        vector = always_redraw(
+            lambda: Arrow(
+                start=ORIGIN,
+                end=axes.c2p(v1 * t.get_value(),
+                             v2 * t.get_value()**2),
+                buff=0,
+                color=YELLOW
+            )
+        )
+
+        self.add(vector)
+
+        self.play(t.animate.set_value(4), run_time=4, rate_func=linear)
+
+        self.wait()
