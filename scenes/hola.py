@@ -4,6 +4,7 @@ from manim import *
 class Lanzamiento(Scene):
     def construct(self):
         t=ValueTracker(0)
+        eqtext=MathTex(r"\vec{d}=\vec{v}\cdot t+\frac{\vec{g}\cdot t^2}{2}").add_updater(lambda q: q.move_to([-4.5,3.3,0]))
         circle = always_redraw(
                  lambda: Circle(radius=0.15, color=GREEN).move_to([2*t.get_value()-4,3*t.get_value()-1*t.get_value()**2-3,0]).set_fill(ManimColor("#88FF44"), opacity=1)  # set the color and transparency
         )
@@ -22,9 +23,10 @@ class Lanzamiento(Scene):
         trazo=TracedPath(circle.get_center)
         velotext=MathTex(r"\vec{v}\cdot t").add_updater(lambda m: m.next_to(puntofalso, LEFT))
         acetext=MathTex(r"\frac{\vec{g}\cdot t^2}{2}").add_updater(lambda x: x.next_to(aceleración, RIGHT))
-        self.add(trazo,puntofalso)
+        desptext=MathTex(r"\vec{d}").add_updater(lambda y: y.move_to([t.get_value()-3.8,1.5*t.get_value()-0.5*t.get_value()**2-3.3,0]))
+        self.add(trazo,puntofalso,eqtext)
         self.play(FadeIn(circle))
-        self.add(velocidad,aceleración,distancia,velotext,acetext)
+        self.add(velocidad,aceleración,distancia,velotext,acetext,desptext)
         self.play(
 	        t.animate.set_value(3), #define a que valor se cambia t
 	        run_time=4, #cuantos segundos dura la animación, vale 1 si se omite la línea
