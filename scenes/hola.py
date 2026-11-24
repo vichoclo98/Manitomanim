@@ -1,9 +1,10 @@
 from manim import *
 config.frame_width = 20 #se puede regular para hacer zoom, mantiene aspect ratio
 #uv run manim -pql scenes/hola.py Lanzamiento
+#uv run manim -pql --format=gif scenes/hola.py Lanzamiento
 class Lanzamiento(Scene):
     def construct(self):
-        self.camera.background_color = ManimColor("#012121")
+        self.camera.background_color = ManimColor("#1c1c1c")
         t=ValueTracker(0)
         eqtext=MathTex(r"\vec{D}=\vec{v}_0\cdot t+\frac{1}{2}\vec{g}\cdot t^2")
         eqtext.to_corner(UL) #deja en superior izquierda del cuadro original, si no calza es por config.frame_width
@@ -64,7 +65,7 @@ class Lanzamiento(Scene):
 class FzasCons(Scene):
     def construct(self):
         #Seteo del color de fondo
-        self.camera.background_color = ManimColor("#012121")
+        self.camera.background_color = ManimColor("#1c1c1c")
         #colocar el cuadrículado de fondo, quitar en versión final
         #ax = NumberPlane(y_range=[-1, 7], background_line_style={"stroke_opacity": 0.4})
         #variable temp
